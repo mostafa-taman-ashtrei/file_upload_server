@@ -22,13 +22,20 @@ import fs from 'fs';
 
     app.get('/', (_, res) => res.json({ msg: 'hello world!' }));
 
-    app.post('/upload', uploadEngine.single('image'), (req, res) => {
+    app.post('/upload/single', uploadEngine.single('file'), (req, res) => {
         try {
             const { file } = req;
-            console.log(file);
             res.json({ file });
         } catch (e) {
-            res.json({ e });
+            throw new Error(e);
+        }
+    });
+
+    app.post('/upload/multiple', uploadEngine.array('files'), (req, res) => {
+        try {
+            const { files } = req;
+            res.json({ files });
+        } catch (e) {
             throw new Error(e);
         }
     });
