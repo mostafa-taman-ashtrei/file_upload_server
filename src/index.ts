@@ -1,7 +1,10 @@
 import { config } from 'dotenv';
 import express from 'express';
-import multer from 'multer';
 import fs from 'fs';
+import helmet from 'helmet';
+import morgan from 'morgan';
+import path from 'path';
+import initRoutes from './routes/initRoutes';
 
 (async () => {
     config();
@@ -9,36 +12,16 @@ import fs from 'fs';
     const app = express();
     const port = process.env.PORT || 8080;
 
-    const uploadDir = 'uploads';
+    app.use(helmet());
+    app.use(express.json());
+    app.use(morgan('dev'));
 
-    if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir);
+    if (process.env.NODE_ENV === 'production') {
+        const accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'), { flags: 'a' });
+        app.use(morgan('combined', { stream: accessLogStream }));
+    }
 
-    const storageEngine = multer.diskStorage({
-        destination: (_, __, cb) => cb(null, uploadDir),
-        filename: (_, file, cb) => cb(null, `${Date.now()}--${file.originalname}`),
-    });
-
-    const uploadEngine = multer({ storage: storageEngine });
-
-    app.get('/', (_, res) => res.json({ msg: 'hello world!' }));
-
-    app.post('/upload/single', uploadEngine.single('file'), (req, res) => {
-        try {
-            const { file } = req;
-            res.json({ file });
-        } catch (e) {
-            throw new Error(e);
-        }
-    });
-
-    app.post('/upload/multiple', uploadEngine.array('files'), (req, res) => {
-        try {
-            const { files } = req;
-            res.json({ files });
-        } catch (e) {
-            throw new Error(e);
-        }
-    });
+    initRoutes(app);
 
     app.listen(port, () => console.log(`Server is running on port ${port} ...`));
 })();

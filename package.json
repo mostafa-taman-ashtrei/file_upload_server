@@ -10,7 +10,6 @@
     "watch": "tsc -w",
     "build": "tsc",
     "build:watch": "tsc -w",
-    "migrate": "mikro-orm migration:create",
     "lint": "eslint src --ext .ts",
     "lint:fix": "npm run lint -- --fix"
   },
@@ -19,6 +18,7 @@
   "license": "ISC",
   "devDependencies": {
     "@types/express": "^4.17.12",
+    "@types/morgan": "^1.9.2",
     "@types/multer": "^1.4.5",
     "@types/node": "^15.6.1",
     "@typescript-eslint/eslint-plugin": "^4.25.0",
@@ -32,6 +32,8 @@
   "dependencies": {
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
+    "helmet": "^4.6.0",
+    "morgan": "^1.10.0",
     "multer": "^1.4.2"
   }
 }
