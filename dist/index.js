@@ -44,6 +44,7 @@ var express_1 = __importDefault(require("express"));
 var fs_1 = __importDefault(require("fs"));
 var helmet_1 = __importDefault(require("helmet"));
 var morgan_1 = __importDefault(require("morgan"));
+var cors_1 = __importDefault(require("cors"));
 var path_1 = __importDefault(require("path"));
 var initRoutes_1 = __importDefault(require("./routes/initRoutes"));
 (function () { return __awaiter(void 0, void 0, void 0, function () {
@@ -52,6 +53,7 @@ var initRoutes_1 = __importDefault(require("./routes/initRoutes"));
         dotenv_1.config();
         app = express_1.default();
         port = process.env.PORT || 8080;
+        app.use(cors_1.default({ origin: 'http://localhost:3000' }));
         app.use(helmet_1.default());
         app.use(express_1.default.json());
         app.use(morgan_1.default('dev'));

@@ -3,6 +3,7 @@ import express from 'express';
 import fs from 'fs';
 import helmet from 'helmet';
 import morgan from 'morgan';
+import cors from 'cors';
 import path from 'path';
 import initRoutes from './routes/initRoutes';
 
@@ -12,6 +13,7 @@ import initRoutes from './routes/initRoutes';
     const app = express();
     const port = process.env.PORT || 8080;
 
+    app.use(cors({ origin: 'http://localhost:3000' }));
     app.use(helmet());
     app.use(express.json());
     app.use(morgan('dev'));
