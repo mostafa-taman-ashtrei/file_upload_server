@@ -8,7 +8,6 @@ var uploadController_1 = require("../controllers/uploadController");
 var multer_1 = __importDefault(require("../middlewares/multer"));
 var router = express_1.Router();
 var initRoutes = function (app) {
-    router.post('/upload/single', multer_1.default.single('file'), uploadController_1.singleUpload);
     router.post('/upload/multiple', multer_1.default.array('files'), uploadController_1.multipleUpload);
     return app.use(router);
 };
