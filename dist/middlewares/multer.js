@@ -5,12 +5,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var multer_1 = __importDefault(require("multer"));
 var fs_1 = __importDefault(require("fs"));
+var uuid_1 = require("uuid");
 var uploadDir = 'uploads';
 if (!fs_1.default.existsSync(uploadDir))
     fs_1.default.mkdirSync(uploadDir);
 var storageEngine = multer_1.default.diskStorage({
     destination: function (_, __, cb) { return cb(null, uploadDir); },
-    filename: function (_, file, cb) { return cb(null, Date.now() + "--" + file.originalname); },
+    filename: function (_, file, cb) { return cb(null, uuid_1.v4() + "-" + file.originalname); },
 });
 var uploadEngine = multer_1.default({ storage: storageEngine });
 exports.default = uploadEngine;

@@ -8,7 +8,7 @@ if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir);
 
 const storageEngine = multer.diskStorage({
     destination: (_, __, cb) => cb(null, uploadDir),
-    filename: (_, file, cb) => cb(null, `${v4()}--${file.originalname}`),
+    filename: (_, file, cb) => cb(null, `${v4()}-${file.originalname}`),
 });
 
 const uploadEngine = multer({ storage: storageEngine });

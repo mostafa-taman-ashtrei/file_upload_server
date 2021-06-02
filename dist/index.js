@@ -62,6 +62,7 @@ var initRoutes_1 = __importDefault(require("./routes/initRoutes"));
             app.use(morgan_1.default('combined', { stream: accessLogStream }));
         }
         initRoutes_1.default(app);
+        app.use('/static', express_1.default.static('uploads'));
         app.listen(port, function () { return console.log("Server is running on port " + port + " ..."); });
         return [2 /*return*/];
     });

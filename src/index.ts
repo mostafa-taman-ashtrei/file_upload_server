@@ -24,6 +24,7 @@ import initRoutes from './routes/initRoutes';
     }
 
     initRoutes(app);
+    app.use('/static', express.static('uploads'));
 
     app.listen(port, () => console.log(`Server is running on port ${port} ...`));
 })();
